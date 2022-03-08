@@ -8,7 +8,7 @@ const mongoDBSession = require('connect-mongodb-session')(session);
 const route = express.Router();
 
 const store = new mongoDBSession({
-  uri: process.env.dbURI,
+  uri: "mongodb+srv://adev:adev@cluster0.nphce.mongodb.net/Hospital-api2?retryWrites=true&w=majority",
   collection: "MySessions",
 })
 
