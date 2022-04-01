@@ -20,6 +20,7 @@ const userSchema = new Schema({
     type: String,
     enum: ['Admin', 'Aide soignant', 'Agent restauration', 'Responsable approvisionnement', 'None'],
   },
+  active : Boolean
 }, { timestamps: true });
 userSchema.index({ '$**': 'text' });
 

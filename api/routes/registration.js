@@ -6,7 +6,7 @@ const {
 const route = express.Router();
 
 // @route POST /v1/register
-// @desc  add user
+// @desc  add user 
 // @access Public
 
 route.post('/', 

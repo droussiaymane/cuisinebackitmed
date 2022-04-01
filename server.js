@@ -11,17 +11,17 @@ if(process.env.NODE_ENV !== 'production'){
 
 // Initialize the session 
 const uri = "mongodb+srv://adev:adev@cluster0.nphce.mongodb.net/Hospital-api2?retryWrites=true&w=majority";
-
+//const uri = "mongodb://127.0.0.1:27017/cuiback";
 mongoose.connect(uri, {  useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true } )
   .then(() => {
     console.log("MongoDB Connected…")
   })
-  .catch(err => console.log(err))
+  .catch(err => console.log(err)) 
 
 const app = express();
 app.use(cors());
 app.use(cookieParser('MY SECRET'));
-app.use(express.json());
+app.use(express.json()); 
 
 app.use(session({
   secret: 'Some secret',
@@ -45,4 +45,4 @@ app.use('/v1/users', require('./api/routes/users'));
 app.use('/v1/kitchenOrder', require('./api/routes/kitchenOrder'));
 app.use('/v1/statistics', require('./api/routes/statistics'));
 
-app.listen( process.env.PORT || 3000 , () => console.log(`server running on port 3000`));
+app.listen( process.env.PORT || 3000 , () => console.log(`server running on port `+(process.env.PORT || 3000)));
