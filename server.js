@@ -10,7 +10,7 @@ if(process.env.NODE_ENV !== 'production'){
 }
 
 // Initialize the session 
-const uri = "mongodb+srv://adev:adev@cluster0.nphce.mongodb.net/Hospital-api2?retryWrites=true&w=majority";
+const uri = "mongodb+srv://new_user:S53oJfV3i38n2Jki@cluster0.i52k8.mongodb.net/cuisine?retryWrites=true&w=majority";
 //const uri = "mongodb://127.0.0.1:27017/cuiback";
 mongoose.connect(uri, {  useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true } )
   .then(() => {
