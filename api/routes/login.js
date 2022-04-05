@@ -20,7 +20,8 @@ route.post("/", async (req, res) => {
   console.log(req.body)
   
   var user_id;
-  if ((undefined== await userLogin(req.body, res))) {
+  var user=await userLogin(req.body, res);
+  if ((undefined==user )) {
     return res.status(404).send({ message: 'User not found or wrong credentials' })
   }
   else{
@@ -32,7 +33,7 @@ route.post("/", async (req, res) => {
 
   res.status(200)
   return res.send({
-    message: 'The user is authenticated'
+    message: user.role
   });
   
 }})

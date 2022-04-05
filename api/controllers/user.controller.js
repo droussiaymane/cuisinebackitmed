@@ -7,7 +7,7 @@ const { userSchema } = require('../helpers/userValidator')
 
 async function userRegister(userInfo, res) {
   // Validate with Joi first
-
+ 
   const { error, value } = userSchema.validate(userInfo)
 
   console.log(error)
@@ -15,6 +15,7 @@ async function userRegister(userInfo, res) {
   if (error)
     return res.status(400).json({ error })
   else {
+	  
     const { fullName, email, password, role } = userInfo;
 
     console.log(fullName);
@@ -35,6 +36,7 @@ async function userRegister(userInfo, res) {
         email,
         role,
         password: hashPassword,
+		active: false
       });
       await user.save();
 
@@ -85,11 +87,8 @@ async function deleteUser(req, res) {
 async function userLogin(userInfo, res) {
   // Look for user in database without use of jwt
 
-  console.log("hh")
-  console.log(userInfo)
-
   const { email, password } = userInfo;
-  if (!email || !password){
+  if (!email || !password ){
     return undefined;
   }
 
@@ -100,14 +99,18 @@ async function userLogin(userInfo, res) {
       return undefined;
        
     }
-
+	
     else if (!bcrypt.compareSync(password, user.password)) {
+    
+      return undefined;
+    }
+	else if (!user.active) {
     
       return undefined;
     }
 
     else{
-      return user._id;
+      return user;
     }
  
 
@@ -132,10 +135,28 @@ async function updateUser(req, res) {
     return res.status(500).json("Server Error");
   }
 }
+
+async function activateUser(req, res) {
+  const { fullName, role, email } = req.body;
+  try {
+    const user = await UserModel.findById(req.params.id);
+    if (!user) return res.status(404).json({ msg: "Utilisateur introuvable" });
+    const checkEmail = await UserModel.find({ email });
+    if (checkEmail.length && user.email !== email) {
+      return res.status(403).json({ msg: "Email exist" });
+    }
+    user.active=true
+    await user.save();
+    return res.status(200).json({ msg: "user mis à jour" });
+  } catch (error) {
+    return res.status(500).json("Server Error");
+  }
+}
 module.exports = {
   userRegister,
   userLogin,
   listUsers,
   deleteUser,
+  activateUser,
   updateUser,
 };
