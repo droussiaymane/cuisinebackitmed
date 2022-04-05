@@ -94,7 +94,7 @@ async function userLogin(userInfo, res) {
 
 
     const user = await UserModel.findOne({ email });
-console.log(user) 
+
     if (!user) {
       return undefined;
        
@@ -110,7 +110,7 @@ console.log(user)
     }
 
     else{
-      return user._id;
+      return user;
     }
  
 
